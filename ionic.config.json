@@ -1,0 +1,7 @@
+{
+  "name": "Bro JobFinder",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
