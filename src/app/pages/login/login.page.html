@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card class="login-card">
+    <ion-card-header>
+      <ion-segment value="default">
+        <ion-segment-button value="default">
+          <ion-label>Students</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="segment">
+          <ion-label>Companies</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-card-header>
+
+    <ion-card-content>
+
+      <div>
+        <ion-list>
+          <ion-item>
+            <ion-input placeholder="Username"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-input placeholder="Password"></ion-input>
+          </ion-item>
+
+          <ion-item *NgIf="type">
+            <ion-input placeholder="Company Name"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-button>
+              Login
+            </ion-button>
+            <ion-button>
+              Register
+            </ion-button>
+          </ion-item>
+        </ion-list>
+      </div>
+
+    </ion-card-content>
+  </ion-card>
+</ion-content>
