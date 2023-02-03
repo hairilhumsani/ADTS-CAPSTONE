@@ -7,6 +7,7 @@ var cors = require('cors');
 app.use(cors());
 app.use(bodyParser.json());
 app.use(methodOvereide());
+app.use(express.static(__dirname + '/dist/bro-job-finder'));
 
 const allowedOrigins = [
     'capacitor://localhost',
@@ -28,6 +29,7 @@ const corsOptions = {
 app.options('*', cors(corsOptions));
 
 app.get('/', cors(corsOptions), (req, res, next) => {
+    res.sendFile(path.join(__dirname+'/dist/bro-job-finder/index.html'));
     res.json({ message: 'This route is CORS-enabled for an allowed origin.' });
 })
     
