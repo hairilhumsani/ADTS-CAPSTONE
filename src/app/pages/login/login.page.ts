@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,22 +11,20 @@ export class LoginPage implements OnInit {
 
   private typeLogin : boolean = false;
 
-  constructor(private storage : Storage) { }
+  account : string = "students";
+
+  constructor(private storage : Storage,private router : Router) { }
 
   ngOnInit() {
-    this.setSTUFF();
   
   }
 
-   setEmail()
-  {
-    this.storage.get('Name').then(data=>{console.log(data)})
-  }
 
-
-  async setSTUFF()
+  goToRegister(typeOfRegister : string)
   {
-    await this.storage.set('Name','BABAI TEST');
+
+    this.router.navigate(['register',typeOfRegister]); //once added relocate to tab2
+
   }
 
 

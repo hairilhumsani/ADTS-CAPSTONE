@@ -7,11 +7,11 @@
 <ion-content>
   <ion-card class="login-card">
     <ion-card-header>
-      <ion-segment value="default">
-        <ion-segment-button value="default">
+      <ion-segment [(ngModel)]="account" value="students">
+        <ion-segment-button value="students">
           <ion-label>Students</ion-label>
         </ion-segment-button>
-        <ion-segment-button value="segment">
+        <ion-segment-button value="companies">
           <ion-label>Companies</ion-label>
         </ion-segment-button>
       </ion-segment>
@@ -19,30 +19,49 @@
 
     <ion-card-content>
 
-      <div>
-        <ion-list>
+      <div [ngSwitch]="account">
+        
+        <ion-list *ngSwitchCase="'students'">
           <ion-item>
-            <ion-input placeholder="Username"></ion-input>
+            <ion-input type="email" placeholder="Student Email"></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-input placeholder="Password"></ion-input>
-          </ion-item>
-
-          <ion-item *NgIf="type">
-            <ion-input placeholder="Company Name"></ion-input>
+            <ion-input type="Password" placeholder="Password"></ion-input>
           </ion-item>
 
           <ion-item>
             <ion-button>
               Login
             </ion-button>
-            <ion-button>
+            <ion-button (click)="goToRegister('students')">
               Register
             </ion-button>
           </ion-item>
         </ion-list>
+
+        <ion-list *ngSwitchCase="'companies'">
+          <ion-item>
+            <ion-input type="email" placeholder="Company Email"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-input type="Password" placeholder="Password"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-button>
+              Login
+            </ion-button>
+            <ion-button (click)="goToRegister('companies')">
+              Register
+            </ion-button>
+          </ion-item>
+        </ion-list>
+
       </div>
+
+      
 
     </ion-card-content>
   </ion-card>

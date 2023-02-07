@@ -1,0 +1,85 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Register {{account}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-content>
+
+      <div [ngSwitch]="account">
+        
+        <ion-list *ngSwitchCase="'students'">
+          <ion-item>
+            <ion-input placeholder="Student Name"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-input type="email" placeholder="Student Email"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-input type="Password" placeholder="Password"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-input type="Password" placeholder="Confirm Password"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-button (click)="backToLogin()">
+              Back
+            </ion-button>
+            <ion-button>
+              Register
+            </ion-button>
+          </ion-item>
+        </ion-list>
+
+        <ion-list *ngSwitchCase="'companies'">
+          <ion-item>
+            <ion-input placeholder="Company Name"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-input type="email" placeholder="Company Email"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-input placeholder="Company Address"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-input placeholder="Company Description"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-input placeholder="Type of Industry"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-input type="Password" placeholder="Password"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-input type="Password" placeholder="Confirm Password"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-button (click)="backToLogin()">
+              Back
+            </ion-button>
+            <ion-button>
+              Register
+            </ion-button>
+          </ion-item>
+        </ion-list>
+
+      </div>
+
+      
+
+    </ion-card-content>
+  </ion-card>
+</ion-content>
