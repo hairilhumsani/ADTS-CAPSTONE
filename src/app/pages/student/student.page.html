@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>student</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  
+<div *ngIf="typeOfAccount == 'student'">
+
+<!--APPLICATION COLUMN-->
+<ion-list>
+  <ion-item>
+    <ion-label>Applications</ion-label>
+    <ion-button id="open-application-modal" expand="block" slot="end">Add Applications</ion-button>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Description</ion-label>
+    <ion-label>Status</ion-label>
+    <ion-label>Company</ion-label>
+  </ion-item>
+
+</ion-list>
+<!--MODAL FOR APPLICATIONS-->
+<ion-modal #jobDescriptionModal trigger="open-application-modal">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Add Job Details</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="saveJobDetails()">Save</ion-button>
+          <ion-button (click)="jobDescriptionModal.dismiss()">Close</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <form [formGroup]="jobDetailsAddForm">
+        <ion-list>
+          <ion-item>
+            <ion-select (ionChange)="getAppCom($event)" placeholder="Select an application">
+              <div *ngFor="let item of applicationCompanyList">
+                <ion-select-option [value]="item.appCompanyId">{{item.description}}</ion-select-option>
+              </div>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-label><h3>Description</h3><p>{{jobSelectedValueCompanyApplication.description}}</p></ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label><h3>Job Type</h3><p>{{jobSelectedValueCompanyApplication.jobType}}</p></ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label><h3>Job(s) Listed</h3><p></p></ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label><h3>Company Name</h3><p>{{jobSelectedValueCompanyApplication.company_name}}</p></ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label><h3>Slots Available</h3><p>{{jobSelectedValueCompanyApplication.no_pax}}</p></ion-label>
+          </ion-item>
+
+          
+
+        </ion-list>
+      </form>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+</div>
+
+</ion-content>

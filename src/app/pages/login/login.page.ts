@@ -74,7 +74,7 @@ export class LoginPage implements OnInit {
         this.setAccount("company")
         this.setEmail(email)//session
         this.storage.set("accountData",data)
-        this.setLoading()
+        this.setLoading('home')
       } else {
           this.loginFail();
        
@@ -111,7 +111,7 @@ export class LoginPage implements OnInit {
         this.setAccount("student")
         this.setEmail(email)//session
         this.storage.set("accountData",data)
-        this.setLoading()
+        this.setLoading('student')
         
       } else {
           this.loginFail();
@@ -154,7 +154,7 @@ export class LoginPage implements OnInit {
   
   }
 
- async setLoading()
+ async setLoading(accountType : string)
   {
    
     (await this.loadingCtrl.create({
@@ -162,7 +162,7 @@ export class LoginPage implements OnInit {
       duration: 3000,
     })).present().then(() =>
     {
-      this.router.navigate(['home']);
+      this.router.navigate([accountType]);
     }).finally(()=>{
       window.location.reload();
     });
