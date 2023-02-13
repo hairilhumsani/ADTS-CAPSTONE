@@ -48,23 +48,23 @@ export class HomePage implements OnInit {
   constructor(private storage: Storage, private http: HttpClient, private toast: ToastController, private modalController: ModalController, private router: Router, private loadingCtrl: LoadingController) {
 
     this.openHouseAddForm = new FormGroup({
-      location: new FormControl(),
-      dateTime: new FormControl(),
-      noOfPax: new FormControl()
+      location: new FormControl('', [Validators.required]),
+      dateTime: new FormControl('', [Validators.required]),
+      noOfPax: new FormControl('', [Validators.required])
 
     })
 
     this.jobDetailsAddForm = new FormGroup({
-      jobName: new FormControl(),
-      jobDescription: new FormControl(),
-      jobRequirement: new FormControl()
+      jobName: new FormControl('', [Validators.required]),
+      jobDescription: new FormControl('', [Validators.required]),
+      jobRequirement: new FormControl('', [Validators.required])
     })
 
     this.applicationCompanyForm = new FormGroup({
-      description : new FormControl(),
-      jobType : new FormControl(),
-      jobsId : new FormControl(),
-      openHouseId : new FormControl()
+      description : new FormControl('', [Validators.required]),
+      jobType : new FormControl('', [Validators.required]),
+      jobsId : new FormControl('', [Validators.required]),
+      openHouseId : new FormControl('', [Validators.required])
 
     })
 
