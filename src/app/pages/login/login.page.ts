@@ -26,14 +26,14 @@ export class LoginPage implements OnInit {
 
     this.loginCompanyForm = new FormGroup({
       
-      companyEmail: new FormControl(),
-      password: new FormControl()
+      companyEmail: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required])
 
     })
 
     this.loginStudentForm = new FormGroup({
-      studentEmail: new FormControl(),
-      password: new FormControl()
+      studentEmail: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required])
     })
 
    }
