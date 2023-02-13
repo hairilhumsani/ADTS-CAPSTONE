@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-application-form',
-  templateUrl: './application-form.page.html',
-  styleUrls: ['./application-form.page.scss'],
+  selector: 'app-update-profile',
+  templateUrl: './update-profile.page.html',
+  styleUrls: ['./update-profile.page.scss'],
 })
-export class ApplicationFormPage implements OnInit {
+export class UpdateProfilePage implements OnInit {
+
   applicationForm: FormGroup;
 
   constructor() { 
@@ -27,5 +28,4 @@ export class ApplicationFormPage implements OnInit {
 
   ngOnInit() {
   }
-
 }

@@ -4,18 +4,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ApplicationFormPageRoutingModule } from './application-form-routing.module';
+import { UpdateProfilePageRoutingModule } from './update-profile-routing.module';
 
-import { ApplicationFormPage } from './application-form.page';
+import { UpdateProfilePage } from './update-profile.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule,
     IonicModule,
-    ApplicationFormPageRoutingModule
+    UpdateProfilePageRoutingModule,
+    ReactiveFormsModule
   ],
-  declarations: [ApplicationFormPage]
+  declarations: [UpdateProfilePage]
 })
-export class ApplicationFormPageModule {}
+export class UpdateProfilePageModule {}

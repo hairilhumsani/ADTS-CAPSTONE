@@ -1,14 +1,11 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Update Form</ion-title>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
+    <ion-title>Update Profile</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <form m [formGroup]="updateForm">
+  <form [formGroup]="updateForm">
     <ion-item>
       <ion-label>Name as in NRIC:</ion-label>
       <ion-input formControlName="name"></ion-input>
@@ -77,4 +74,5 @@
     <ion-button expand="block" color="secondary" (click)=submit()>Submit</ion-button>
 
   </form>
+
 </ion-content>
