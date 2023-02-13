@@ -1,0 +1,80 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Update Form</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form m [formGroup]="updateForm">
+    <ion-item>
+      <ion-label>Name as in NRIC:</ion-label>
+      <ion-input formControlName="name"></ion-input>
+      <span slot="error">Name is required</span>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Email:</ion-label>
+      <ion-input formControlName="email"></ion-input>
+      <span slot="error">Valid email is required</span>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Contact Number:</ion-label>
+      <ion-input type="number" formControlName="contactNumber"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Certification:</ion-label>
+      <ion-input formControlName="certification"></ion-input>
+      <span slot="error">Name of Certification is required</span>
+    </ion-item>
+      
+    <ion-item>
+      <ion-label>GPA:</ion-label>
+      <ion-input formControlName="gpa"></ion-input>
+      <span slot="error">Please provide your GPA</span>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Industry Interest:</ion-label>
+      <ion-input formControlName="industry"></ion-input>
+      <span slot="error">Please provide your Industry Interest</span>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Summary:</ion-label>
+      <ion-input formControlName="summary"></ion-input>
+      <span slot="error">Please enter your summary</span>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Expected Salary:</ion-label>
+      <ion-input formControlName="salary"></ion-input>
+      <span slot="error">Please provide what is your expected salary</span>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Birth Date:</ion-label>
+      <ion-input formControlName="birth"></ion-input>
+      <span slot="error">Please enter your Birth Date</span>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Gender:</ion-label>
+      <ion-input formControlName="gender"></ion-input>
+      <span slot="error">Please enter your Gender</span>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Password:</ion-label>
+      <ion-input formControlName="password"></ion-input>
+      <span slot="error">Please provide a new password</span>
+    </ion-item>
+
+    <ion-button expand="block" color="secondary" (click)=submit()>Submit</ion-button>
+
+  </form>
+</ion-content>
