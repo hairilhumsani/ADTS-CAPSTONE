@@ -20,18 +20,18 @@
     <ion-card-content>
 
       <div [ngSwitch]="account">
-        
-        <ion-list *ngSwitchCase="'students'">
+        <form [formGroup]="loginStudentForm" *ngSwitchCase="'students'">
+        <ion-list >
           <ion-item>
-            <ion-input type="email" placeholder="Student Email"></ion-input>
+            <ion-input formControlName="studentEmail" type="email" placeholder="Student Email"></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-input type="Password" placeholder="Password"></ion-input>
+            <ion-input formControlName="password" type="Password" placeholder="Password"></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-button>
+            <ion-button (click)="loginStudent()">
               Login
             </ion-button>
             <ion-button (click)="goToRegister('students')">
@@ -39,18 +39,19 @@
             </ion-button>
           </ion-item>
         </ion-list>
-
-        <ion-list *ngSwitchCase="'companies'">
+        </form>
+        <form [formGroup]="loginCompanyForm" *ngSwitchCase="'companies'">
+        <ion-list>
           <ion-item>
-            <ion-input type="email" placeholder="Company Email"></ion-input>
+            <ion-input formControlName="companyEmail" type="email" placeholder="Company Email"></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-input type="Password" placeholder="Password"></ion-input>
+            <ion-input formControlName="password" type="Password" placeholder="Password"></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-button>
+            <ion-button (click)="loginCompany()">
               Login
             </ion-button>
             <ion-button (click)="goToRegister('companies')">
@@ -58,6 +59,7 @@
             </ion-button>
           </ion-item>
         </ion-list>
+      </form>
 
       </div>
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ModalController, ToastController } from '@ionic/angular';
 import { Observable } from 'rxjs';
@@ -14,8 +14,9 @@ export class RegisterPage implements OnInit {
 
   account : string = '';
 
-  signupForm: FormGroup;
-  //data: Observable<any>;
+  signupFormCompany: FormGroup;
+
+  signupFormStudent: FormGroup;
 
   constructor(private route : ActivatedRoute, private router : Router,
     private modalController: ModalController,
@@ -23,7 +24,26 @@ export class RegisterPage implements OnInit {
      public http: HttpClient, 
      public formBuilder: FormBuilder) {
 
-      this.signupForm = new FormGroup({});
+      this.signupFormCompany = new FormGroup({
+
+        companyName: new FormControl(),
+        companyEmail: new FormControl(),
+        companyAddress: new FormControl(),
+        companyDescription: new FormControl(),
+        typeOfIndustry: new FormControl(),
+        password: new FormControl()
+
+
+      });
+
+      this.signupFormStudent = new FormGroup(
+        {
+          studentName : new FormControl(),
+          studentEmail : new FormControl(),
+          studentGender : new FormControl(),
+          studentPassword : new FormControl()
+        }
+      )
       }
 
   ngOnInit() {
@@ -39,12 +59,16 @@ export class RegisterPage implements OnInit {
 
   signupCompany() {
     //this.modalController.dismiss();
-    var url = 'https://itj153-21s1.herokuapp.com/signup';
-    //var url = 'https://itj153-21s1.herokuapp.com/signupNoHash';  //No encryption - password in the clear
+
+    var url = 'https://broappv6.herokuapp.com/signupCompany';
+
        var postData = JSON.stringify({
- // saving it as Email and will be used at server.js
-         Email: this.signupForm.value['email'], 
-         Password: this.signupForm.value['password'],
+        CompanyName: this.signupFormCompany.value['companyName'],
+        CompanyEmail: this.signupFormCompany.value['companyEmail'],
+        CompanyAddress: this.signupFormCompany.value['companyAddress'],
+        CompanyDescription: this.signupFormCompany.value['companyDescription'],
+        TypeOfIndustry: this.signupFormCompany.value['typeOfIndustry'],
+        Password: this.signupFormCompany.value['password'],
        });
        const httpOptions = {
          headers: new HttpHeaders({
@@ -54,12 +78,11 @@ export class RegisterPage implements OnInit {
          })
        };
        this.http.post(url, postData, httpOptions).subscribe((data) => {
-         console.log('postData:', postData)
          if (data == false) {
            this.registerfail()
          } else if (data == true) {
-           this.register()     
-            this.modalController.dismiss();
+           this.register(this.signupFormCompany.value['companyEmail']);
+           this.backToLogin();
          }
        }, error => {
          console.log(error);
@@ -68,10 +91,39 @@ export class RegisterPage implements OnInit {
  
    }
 
-   async register() {
-    
-    var email = this.signupForm.value['email'];
 
+   signupStudent() {
+    var url = 'https://broappv6.herokuapp.com/signupStudent';
+
+       var postData = JSON.stringify({
+        Email: this.signupFormStudent.value['studentEmail'],
+        Name: this.signupFormStudent.value['studentName'],
+        Password: this.signupFormStudent.value['studentPassword'],
+        Gender: this.signupFormStudent.value['studentGender'],
+       });
+       const httpOptions = {
+         headers: new HttpHeaders({
+           'Content-Type': 'application/json',
+           'Access-Control-Allow-Origin': '*',
+           'Access-Control-Allow-Methods': 'GET,HEAD,PUT,PATCH,POST,DELETE'
+         })
+       };
+       this.http.post(url, postData, httpOptions).subscribe((data) => {
+         if (data == false) {
+           this.registerfail()
+         } else if (data == true) {
+           this.register(this.signupFormStudent.value['studentEmail']);
+           this.backToLogin();
+         }
+       }, error => {
+         console.log(error);
+       });
+ 
+ 
+   }
+
+   async register(email : string) {
+    
     let toast = await this.toast.create({
       message: 'Account created for ' + email,
       duration: 3000,
@@ -82,7 +134,7 @@ export class RegisterPage implements OnInit {
   }
 
   async registerfail() {
-    var email = this.signupForm.value['email'];
+    var email = this.signupFormCompany.value['companyEmail'];
 
     let toast = await this.toast.create({
       message: 'Error! ' + email + ' existed',
