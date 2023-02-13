@@ -20,9 +20,6 @@ export class HomePage implements OnInit {
   typeOfAccount: string = "";
   accountData: any = [];
 
-  canDismiss = false;
-  presentingElement: any = null;
-
   openHouseList: any = [];
   openHouseDateTime: any = "";
   openHouseAddForm: FormGroup;
@@ -35,6 +32,10 @@ export class HomePage implements OnInit {
   applicationCompanyForm: FormGroup;
 
   jobSelectedValueCompanyApplication: any = []
+
+
+
+  applicationStudentForm : FormGroup;
 
 
   httpOptions = {
@@ -68,6 +69,12 @@ export class HomePage implements OnInit {
 
     })
 
+    this.applicationStudentForm =  new FormGroup(
+      {
+        
+      }
+    )
+
   }
 
   async ngOnInit() {
@@ -86,8 +93,6 @@ export class HomePage implements OnInit {
     {
       this.getAllApplicationCompanyItems();
     }
-
-    this.getAppCom()
 
   }
 
@@ -164,18 +169,21 @@ export class HomePage implements OnInit {
     var url = "https://broappv6.herokuapp.com/getApplicationCompany/"
     this.http.get(url,this.httpOptions).subscribe((data)=>
     {
-      this.applicationCompanyList = data
+      this.applicationCompanyList = data;
       console.log(data);
     })
 
     
   }
 
-  getAppCom()
+  getAppCom(appCompanyId : any)
   {
-    var url = "https://broappv6.herokuapp.com/getJobOpenHouse/1"
+    var url = "https://broappv6.herokuapp.com/getJobOpenHouse/" + appCompanyId.detail.value; 
     this.http.get(url,this.httpOptions).subscribe((data)=>
     {
+
+      let tempData: any = data;
+      this.jobSelectedValueCompanyApplication = tempData[0];
       console.log(data)
     }
     )
@@ -275,6 +283,20 @@ export class HomePage implements OnInit {
         this.added("Application details updated.")
       }
     })
+  }
+
+  deleteApplicationCompany(id:any)
+  {
+    var url ='https://broappv6.herokuapp.com/deleteApplicationCompany/' + id
+    this.http.delete(url,this.httpOptions).subscribe(data =>
+      {
+        if (data == false) {
+          this.addedFail("Could not delete application.")
+        }
+        else if (data == true) {
+          this.added("Application details delete.")
+        }
+      })
   }
 
 
