@@ -16,10 +16,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/admin/admin.module').then( m => m.AdminPageModule)
   },
   {
-    path: 'student-home',
-    loadChildren: () => import('./pages/student/student-home/student-home.module').then( m => m.StudentHomePageModule)
-  },
-  {
     path: 'register/:type',
     loadChildren: () => import('./pages/register/register.module').then( m => m.RegisterPageModule)
   }
