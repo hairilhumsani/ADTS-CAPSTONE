@@ -26,22 +26,22 @@ export class RegisterPage implements OnInit {
 
       this.signupFormCompany = new FormGroup({
 
-        companyName: new FormControl(),
-        companyEmail: new FormControl(),
-        companyAddress: new FormControl(),
-        companyDescription: new FormControl(),
-        typeOfIndustry: new FormControl(),
-        password: new FormControl()
+        companyName: new FormControl('', [Validators.required]),
+        companyEmail: new FormControl('', [Validators.required, Validators.email]),
+        companyAddress: new FormControl('', [Validators.required]),
+        companyDescription: new FormControl('', [Validators.required]),
+        typeOfIndustry: new FormControl('', [Validators.required]),
+        password: new FormControl('', [Validators.required])
 
 
       });
 
       this.signupFormStudent = new FormGroup(
         {
-          studentName : new FormControl(),
-          studentEmail : new FormControl(),
-          studentGender : new FormControl(),
-          studentPassword : new FormControl()
+          studentName : new FormControl('', [Validators.required]),
+          studentEmail : new FormControl('', [Validators.required, Validators.email]),
+          studentGender : new FormControl('', [Validators.required]),
+          studentPassword : new FormControl('', [Validators.required])
         }
       )
       }
