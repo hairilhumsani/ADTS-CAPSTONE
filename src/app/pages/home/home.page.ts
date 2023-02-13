@@ -4,7 +4,7 @@ import { CheckboxCustomEvent, LoadingController, ModalController, ToastControlle
 import { Storage } from '@ionic/storage';
 import { formatDate } from '@angular/common';
 import * as moment from 'moment';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { parse } from 'path';
 
