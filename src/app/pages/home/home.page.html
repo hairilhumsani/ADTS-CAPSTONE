@@ -183,60 +183,17 @@
         <div *ngFor="let item of applicationStudentData">
           <ion-item >
             
-            <ion-label>{{item.jobType}}</ion-label>
-            <ion-label>{{item.status}}</ion-label>
-            <ion-label>{{item.openHouseId}}</ion-label>
-            <ion-label>{{item.noOfApplicant}}</ion-label>
-            <ion-button (click)="getCompanyApplicationDefaultValues(item)" id="open-applicationCompanyUpdate{{item.appCompanyId}}-modal">Update</ion-button>
-            <ion-button (click)="deleteApplicationCompany(item.appCompanyId)" color="danger">Delete</ion-button>
+            <ion-label>{{item.studentName}}</ion-label>
+            <ion-label>
+              <ion-select [(ngModel)]="item.status">
+                <ion-select-option value="Pending">Pending</ion-select-option>
+                <ion-select-option value="In Progress">In Progress</ion-select-option>
+                <ion-select-option value="Complete">Complete</ion-select-option></ion-select></ion-label>
+
+            <ion-label>{{item.openHouseLocation}}</ion-label>
+            <ion-label>{{item.jobName}}</ion-label>
+            <ion-button (click)="updateApplicationStatus(item)">Update</ion-button>
             
-            <!--INDIVIDUAL MODAL-->
-            <ion-modal #applicationCompanyUpdateModal
-              trigger="open-applicationCompanyUpdate{{item.appCompanyId}}-modal">
-              <ng-template>
-                <ion-header>
-                  <ion-toolbar>
-                    <ion-title>Update Application Details</ion-title>
-                    <ion-buttons slot="end">
-                      <ion-button (click)="updateApplicationCompany(item)">Update</ion-button>
-                      <ion-button (click)="applicationCompanyUpdateModal.dismiss()">Close</ion-button>
-                    </ion-buttons>
-                  </ion-toolbar>
-                </ion-header>
-
-                <ion-content>
-                  <form [formGroup]="applicationCompanyForm">
-                    <ion-list>
-                      <ion-item>
-                        <ion-select [(ngModel)]="jobSelectedValueCompanyApplication.jobIds" formControlName="jobsId" placeholder="Select Jobs" [multiple]="true">
-                          <div *ngFor="let JobListitem of jobList">
-                            <ion-select-option value="{{JobListitem.jobId}}">{{JobListitem.name}}</ion-select-option>
-                          </div>
-                        </ion-select>
-                      </ion-item>
-
-                      <ion-item>
-                        <ion-select [(ngModel)]="jobSelectedValueCompanyApplication.openHouseId" formControlName="openHouseId" placeholder="Select Open House">
-                          <div *ngFor="let OpenHouseitem of openHouseList">
-                            <ion-select-option value="{{OpenHouseitem.openhouseId}}">{{OpenHouseitem.location}}</ion-select-option>
-                          </div>
-                        </ion-select>
-                      </ion-item>
-
-                      <ion-item>
-                        <ion-input [(ngModel)]="jobSelectedValueCompanyApplication.description" formControlName="description" placeholder="Description"></ion-input>
-
-                      </ion-item>
-
-                      <ion-item>
-                        <ion-input [(ngModel)]="jobSelectedValueCompanyApplication.jobType"  formControlName="jobType" placeholder="Job Type"></ion-input>
-                      </ion-item>
-
-                    </ion-list>
-                  </form>
-                </ion-content>
-              </ng-template>
-            </ion-modal>
           </ion-item>
         </div>
         <!--END TO AVOID CONFUSION-->

@@ -7,6 +7,7 @@ import * as moment from 'moment';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { parse } from 'path';
+import { idText } from 'typescript';
 
 @Component({
   selector: 'app-home',
@@ -100,10 +101,6 @@ export class HomePage implements OnInit {
       this.applicationStudentData = data;
       console.log(this.applicationStudentData);
     })
-
-    
-
-    
   }
 
 
@@ -258,20 +255,14 @@ export class HomePage implements OnInit {
     })
   }
 
-  updateApplicationCompany(item : any)
+  updateApplicationStatus(item : any)
   {
-    var url = "https://broappv6.herokuapp.com/updateApplicantCompany"
+    var url = "https://broappv6.herokuapp.com/updateStatusApplication/" + item.appStudentId
 
     var postData = JSON.stringify({
-      ApplicationCompanyId : item.appCompanyId,
-      JobsIds : this.applicationCompanyForm.value['jobsId'].toString(),
-      OpenHouseId : this.applicationCompanyForm.value['openHouseId'],
-      Availability : item.availability,
-      NoOfApplicant : item.noOfApplicant,
-      Description : this.applicationCompanyForm.value['description'],
-      JobType : this.applicationCompanyForm.value['jobType'],
-      CompanyId : item.companyId
- 
+      
+      Status : item.status
+
     })
 
     this.http.put(url, postData, this.httpOptions).subscribe(data => {
