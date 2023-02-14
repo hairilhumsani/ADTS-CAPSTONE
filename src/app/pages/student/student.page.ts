@@ -82,7 +82,7 @@ export class StudentPage implements OnInit {
     this.setEmail();
     this.getAllOpenHouseItems();
     this.getAllJobItem();
-    //this.getAllApplicationCompanyItems();
+    this.getAllApplicationStudent()
   }
 
   async setEmail() {
@@ -107,6 +107,17 @@ export class StudentPage implements OnInit {
       })
 
       console.log(this.companyData);
+  }
+
+  getAllApplicationStudent()
+  {
+    var url = "https://broappv6.herokuapp.com/getAllStudentApplication/" + this.accountData[0].studentId
+    this.http.get(url,this.httpOptions).subscribe((data)=>
+    {
+    this.applicationList = data
+    console.log(data);
+    }
+    )
   }
 
   getAllOpenHouseItems() {
@@ -179,7 +190,12 @@ export class StudentPage implements OnInit {
         StudentId : this.accountData[0].studentId,
         CompanyId : this.companyData.companyId,
         JobId : this.jobData.jobId,
-        OpenHouseId : this.openHouseData.openHouseId
+        OpenHouseId : this.openHouseData.openHouseId,
+        JobName : this.jobData.name,
+        StudentName : this.accountData[0].name,
+        OpenHouseLocation : this.openHouseData.location,
+        CompanyName : this.companyData.company_name
+
       }
       
     )

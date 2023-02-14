@@ -24,16 +24,18 @@
   </ion-item>
 
   <ion-item>
-    <ion-label>Description</ion-label>
-    <ion-label>Status</ion-label>
     <ion-label>Company</ion-label>
+    <ion-label>Job Name</ion-label>
+    <ion-label>Open House Name</ion-label>
+    <ion-label>Status</ion-label>
   </ion-item>
 
   <ng-container *ngFor="let item of applicationList">
     <ion-item>
-      <ion-label>{{item.description}}</ion-label>
+      <ion-label>{{item.companyName}}</ion-label>
+      <ion-label>{{item.jobName}}</ion-label>
+      <ion-label>{{item.openHouseLocation}}</ion-label>
       <ion-label>{{item.status}}</ion-label>
-      <ion-label>{{item.company}}</ion-label>
     </ion-item>
   </ng-container>
 

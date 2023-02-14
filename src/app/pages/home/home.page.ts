@@ -95,7 +95,7 @@ export class HomePage implements OnInit {
 
   getApplicationStudentDatas(id :any)
   {
-    var url = "https://broappv6.herokuapp.com/getAllStudentApplication/" + id
+    var url = "https://broappv6.herokuapp.com/getAllCompanyApplication/" + id
     this.http.get(url,this.httpOptions).subscribe((data)=>
     {
       this.applicationStudentData = data;
