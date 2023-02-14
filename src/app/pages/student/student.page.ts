@@ -31,7 +31,7 @@ export class StudentPage implements OnInit {
   jobListArray: any = [];
   jobDetailsAddForm: FormGroup;
 
-  applicationCompanyList: any = [];
+  applicationList: any = [];
 
   jobSelectedValueCompanyApplication: any = []
 
@@ -82,7 +82,7 @@ export class StudentPage implements OnInit {
     this.setEmail();
     this.getAllOpenHouseItems();
     this.getAllJobItem();
-    this.getAllApplicationCompanyItems();
+    //this.getAllApplicationCompanyItems();
   }
 
   async setEmail() {
@@ -216,20 +216,20 @@ export class StudentPage implements OnInit {
 
   }
 
-  getApplicationCompanyItems(id: any) {
-    var url = "https://broappv6.herokuapp.com/getApplicationCompany/" + id
-    this.http.get(url, this.httpOptions).subscribe((data) => { this.applicationCompanyList = data }
-    )
-  }
+  // getApplicationCompanyItems(id: any) {
+  //   var url = "https://broappv6.herokuapp.com/getApplicationCompany/" + id
+  //   this.http.get(url, this.httpOptions).subscribe((data) => { this.applicationCompanyList = data }
+  //   )
+  // }
 
-  getAllApplicationCompanyItems() {
-    var url = "https://broappv6.herokuapp.com/getApplicationCompany/"
-    this.http.get(url, this.httpOptions).subscribe((data) => {
-      this.applicationCompanyList = data;
-    })
+  // getAllApplicationCompanyItems() {
+  //   var url = "https://broappv6.herokuapp.com/getApplicationCompany/"
+  //   this.http.get(url, this.httpOptions).subscribe((data) => {
+  //     this.applicationCompanyList = data;
+  //   })
 
 
-  }
+//  }
 
   gotoUpdateProfile(typeOfRegister: string) {
 
