@@ -20,6 +20,7 @@ export class StudentPage implements OnInit {
   typeOfAccount: string = "";
   accountData: any = [];
   companyData: any = [];
+  jobData: any = [];
 
   openHouseList: any = [];
   openHouseData: any =[];
@@ -31,7 +32,6 @@ export class StudentPage implements OnInit {
   jobDetailsAddForm: FormGroup;
 
   applicationCompanyList: any = [];
-  applicationCompanyForm: FormGroup;
 
   jobSelectedValueCompanyApplication: any = []
 
@@ -63,16 +63,11 @@ export class StudentPage implements OnInit {
       jobRequirement: new FormControl('', [Validators.required])
     })
 
-    this.applicationCompanyForm = new FormGroup({
-      description: new FormControl('', [Validators.required]),
-      jobType: new FormControl('', [Validators.required]),
-      jobsId: new FormControl('', [Validators.required]),
-      openHouseId: new FormControl('', [Validators.required])
-
-    })
-
     this.applicationStudentForm = new FormGroup(
       {
+        status: new FormControl('Pending',[Validators.required]),
+        studentId: new FormControl(''),
+        companyId: new FormControl('')
 
       }
     )
@@ -86,6 +81,7 @@ export class StudentPage implements OnInit {
 
     this.setEmail();
     this.getAllOpenHouseItems();
+    this.getAllJobItem();
     this.getAllApplicationCompanyItems();
   }
 
@@ -110,7 +106,7 @@ export class StudentPage implements OnInit {
 
       })
 
-      console.log(this.openHouseData);
+      console.log(this.companyData);
   }
 
   getAllOpenHouseItems() {
@@ -121,8 +117,7 @@ export class StudentPage implements OnInit {
 
       for (let i = 0; i < this.openHouseList.length; i++) {
         var date = moment(this.openHouseList[i].datetime).utcOffset(0)
-        this.openHouseList[i].datetime = date.format("YYYY/MM/DD HH:mm");
-        console.log(this.openHouseList);
+        this.openHouseList[i].datetime = date.format("YYYY/MM/DD HH:mm")
       }
     })
     
@@ -152,14 +147,62 @@ export class StudentPage implements OnInit {
       this.openHouseData = tempData[0];
       var date = moment(this.openHouseData.datetime).utcOffset(0);
       this.openHouseData.datetime = date.format("YYYY/MM/DD HH:mm");
-  
-      this.openHouseData.company = this.getCompanyById(this.openHouseData.companyId);
+      this.jobData.jobId = null
+      this.getCompanyById(this.openHouseData.companyId);
      
 
     })
 
-    console.log(this.openHouseData)
+  }
 
+  async getJobDetailsItemsByJobId(id: any) {
+    var url = "https://broappv6.herokuapp.com/getJobDetailsByJobId/" + id.detail.value
+
+    this.http.get(url, this.httpOptions).subscribe((data) => {
+
+      var tempData: any = data;
+      this.jobData = tempData[0];
+      console.log(this.jobData);
+      this.openHouseData.openHouseId = null
+      this.getCompanyById(this.jobData.companyId);
+    })
+
+  }
+
+
+  addApplicationDetails()
+  {
+    var url = 'https://broappv6.herokuapp.com/addApplicationStudent'
+    var postData = JSON.stringify(
+      {
+        Status : this.applicationStudentForm.value['status'],
+        StudentId : this.accountData[0].studentId,
+        CompanyId : this.companyData.companyId,
+        JobId : this.jobData.jobId,
+        OpenHouseId : this.openHouseData.openHouseId
+      }
+      
+    )
+    console.log(postData)
+    this.http.post(url,postData,this.httpOptions).subscribe((data)=>
+    {
+      if (data == false) {
+        this.addedFail("Could not add application details.")
+      }
+      else if (data == true) {
+        this.added("Application details added.")
+      }
+    })
+  }
+
+  getAllJobItem()
+  {
+    var url = "https://broappv6.herokuapp.com/getJobDetails"
+
+    this.http.get(url,this.httpOptions).subscribe((data)=>
+    {
+      this.jobList = data;
+    })
   }
 
 
@@ -169,17 +212,10 @@ export class StudentPage implements OnInit {
     this.http.get(url, this.httpOptions).subscribe((data) => {
       this.jobList = data;
     })
+    console.log(this.jobList);
 
   }
 
-  async getJobDetailsItemsByJobId(id: any) {
-    var url = "https://broappv6.herokuapp.com/getJobDetailsByJobId/" + id
-
-    this.http.get(url, this.httpOptions).subscribe((data) => {
-      this.jobList = data;
-    })
-
-  }
   getApplicationCompanyItems(id: any) {
     var url = "https://broappv6.herokuapp.com/getApplicationCompany/" + id
     this.http.get(url, this.httpOptions).subscribe((data) => { this.applicationCompanyList = data }

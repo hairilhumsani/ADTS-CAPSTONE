@@ -70,6 +70,7 @@ export class UpdateProfilePage implements OnInit {
       email : this.updateForm.value['email'],
       certification : this.updateForm.value['certification'],
       gpa : this.updateForm.value['gpa'],
+      industry_interest : this.updateForm.value['industry'],
       summary : this.updateForm.value['summary'],
       expected_salary : this.updateForm.value['expected_salary'],
       birth_date : this.updateForm.value['birth_date'],
