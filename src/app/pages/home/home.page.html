@@ -7,7 +7,7 @@
       <ng-template>
         <ion-content>
           <ion-list>
-            <ion-item [button]="true" (click)="logout()" [detail]="false">Update Profile</ion-item>
+            <ion-item [button]="true" [detail]="false">Update Profile</ion-item>
             <ion-item [button]="true" (click)="logout()" [detail]="false">Logout</ion-item>
           </ion-list>
         </ion-content>
@@ -181,7 +181,7 @@
 
         <!--APPLICATION COMPANY DETAILS AND UPDATE-->
         <div *ngFor="let item of applicationStudentData">
-          <ion-item >
+          <ion-item>
             
             <ion-label>{{item.studentName}}</ion-label>
             <ion-label>

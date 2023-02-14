@@ -58,8 +58,6 @@ export class RegisterPage implements OnInit {
   }
 
   signupCompany() {
-    //this.modalController.dismiss();
-
     var url = 'https://broappv6.herokuapp.com/signupCompany';
 
        var postData = JSON.stringify({
