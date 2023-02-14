@@ -20,6 +20,8 @@ export class HomePage implements OnInit {
   typeOfAccount: string = "";
   accountData: any = [];
 
+  applicationStudentData : any = []
+
   openHouseList: any = [];
   openHouseDateTime: any = "";
   openHouseAddForm: FormGroup;
@@ -32,11 +34,6 @@ export class HomePage implements OnInit {
   applicationCompanyForm: FormGroup;
 
   jobSelectedValueCompanyApplication: any = []
-
-
-
-  applicationStudentForm : FormGroup;
-
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -69,12 +66,6 @@ export class HomePage implements OnInit {
 
     })
 
-    this.applicationStudentForm =  new FormGroup(
-      {
-        
-      }
-    )
-
   }
 
   async ngOnInit() {
@@ -84,15 +75,9 @@ export class HomePage implements OnInit {
 
     this.setEmail();
 
-    if (this.typeOfAccount == "company") {
       this.getOpenHouseItems(this.accountData[0].companyId)
       this.getJobDetailsItems(this.accountData[0].companyId)
-      this.getApplicationCompanyItems(this.accountData[0].companyId)
-    }
-    else if (this.typeOfAccount == 'student')
-    {
-      this.getAllApplicationCompanyItems();
-    }
+      this.getApplicationStudentDatas(this.accountData[0].companyId)
 
   }
 
@@ -105,6 +90,20 @@ export class HomePage implements OnInit {
     else if (this.typeOfAccount == "student") {
       this.emailAccount = this.accountData[0].name;
     }
+  }
+
+  getApplicationStudentDatas(id :any)
+  {
+    var url = "https://broappv6.herokuapp.com/getAllStudentApplication/" + id
+    this.http.get(url,this.httpOptions).subscribe((data)=>
+    {
+      this.applicationStudentData = data;
+      console.log(this.applicationStudentData);
+    })
+
+    
+
+    
   }
 
 
