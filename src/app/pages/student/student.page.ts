@@ -13,19 +13,21 @@ import * as moment from 'moment';
 })
 export class StudentPage implements OnInit {
 
-  
 
-  
+  eventChange: any = "";
+
   emailAccount: string = "";
   typeOfAccount: string = "";
   accountData: any = [];
+  companyData: any = [];
 
   openHouseList: any = [];
+  openHouseData: any =[];
   openHouseDateTime: any = "";
   openHouseAddForm: FormGroup;
 
   jobList: any = [];
-  jobListArray : any = [];
+  jobListArray: any = [];
   jobDetailsAddForm: FormGroup;
 
   applicationCompanyList: any = [];
@@ -35,7 +37,7 @@ export class StudentPage implements OnInit {
 
 
 
-  applicationStudentForm : FormGroup;
+  applicationStudentForm: FormGroup;
 
 
   httpOptions = {
@@ -62,49 +64,68 @@ export class StudentPage implements OnInit {
     })
 
     this.applicationCompanyForm = new FormGroup({
-      description : new FormControl('', [Validators.required]),
-      jobType : new FormControl('', [Validators.required]),
-      jobsId : new FormControl('', [Validators.required]),
-      openHouseId : new FormControl('', [Validators.required])
+      description: new FormControl('', [Validators.required]),
+      jobType: new FormControl('', [Validators.required]),
+      jobsId: new FormControl('', [Validators.required]),
+      openHouseId: new FormControl('', [Validators.required])
 
     })
 
-    this.applicationStudentForm =  new FormGroup(
+    this.applicationStudentForm = new FormGroup(
       {
-        
+
       }
     )
+
+    
 
   }
 
   async ngOnInit() {
-
-    await this.storage.get('account').then(v => this.typeOfAccount = v);
     await this.storage.get('accountData').then(v => this.accountData = v);
 
     this.setEmail();
-
-    if (this.typeOfAccount == "company") {
-      this.getOpenHouseItems(this.accountData[0].companyId)
-      this.getJobDetailsItems(this.accountData[0].companyId)
-      this.getApplicationCompanyItems(this.accountData[0].companyId)
-    }
-    else if (this.typeOfAccount == 'student')
-    {
-      this.getAllApplicationCompanyItems();
-    }
-
+    this.getAllOpenHouseItems();
+    this.getAllApplicationCompanyItems();
   }
 
   async setEmail() {
-    console.log(this.accountData)
-    console.log(this.typeOfAccount)
-    if (this.typeOfAccount == "company") {
-      this.emailAccount = this.accountData[0].company_name;
-    }
-    else if (this.typeOfAccount == "student") {
-      this.emailAccount = this.accountData[0].name;
-    }
+
+    this.emailAccount = this.accountData[0].name;
+  }
+
+  updateModalPage(event: any) {
+    this.eventChange = event.detail.value;
+    this.openHouseData.company.company_name = "";
+  }
+
+  getCompanyById(id :any)
+  {
+    var url = 'https://broappv6.herokuapp.com/company/' + id
+
+    this.http.get(url, this.httpOptions).subscribe((data) => {
+
+      var tempData : any = data
+      this.companyData = tempData[0]
+
+      })
+
+      console.log(this.openHouseData);
+  }
+
+  getAllOpenHouseItems() {
+    var url = "https://broappv6.herokuapp.com/getAllOpenHouse"
+
+    this.http.get(url, this.httpOptions).subscribe((data) => {
+      this.openHouseList = data;
+
+      for (let i = 0; i < this.openHouseList.length; i++) {
+        var date = moment(this.openHouseList[i].datetime).utcOffset(0)
+        this.openHouseList[i].datetime = date.format("YYYY/MM/DD HH:mm");
+        console.log(this.openHouseList);
+      }
+    })
+    
   }
 
 
@@ -114,9 +135,8 @@ export class StudentPage implements OnInit {
     this.http.get(url, this.httpOptions).subscribe((data) => {
       this.openHouseList = data;
 
-      for (let i = 0; i < this.openHouseList.length; i++)
-      {
-        var date =  moment(this.openHouseList[i].datetime).utcOffset(0)
+      for (let i = 0; i < this.openHouseList.length; i++) {
+        var date = moment(this.openHouseList[i].datetime).utcOffset(0)
         this.openHouseList[i].datetime = date.format("YYYY/MM/DD HH:mm");
       }
     })
@@ -124,17 +144,21 @@ export class StudentPage implements OnInit {
   }
 
 
-   getOpenHouseItemById(id: any) {
-    var url = "https://broappv6.herokuapp.com/getOpenHouseByOpenHouseId/" + id
+  getOpenHouseItemById(id: any) {
+    var url = "https://broappv6.herokuapp.com/getOpenHouseByOpenHouseId/" + id.detail.value
 
     this.http.get(url, this.httpOptions).subscribe((data) => {
-      var tempData : any = [];
-      tempData = data;
-      this.openHouseList = tempData[0];
-      var date = moment(this.openHouseList.datetime).utcOffset(0);
-      this.openHouseList.datetime = date.format("YYYY/MM/DD HH:mm");
+      var tempData: any = data;
+      this.openHouseData = tempData[0];
+      var date = moment(this.openHouseData.datetime).utcOffset(0);
+      this.openHouseData.datetime = date.format("YYYY/MM/DD HH:mm");
+  
+      this.openHouseData.company = this.getCompanyById(this.openHouseData.companyId);
+     
 
     })
+
+    console.log(this.openHouseData)
 
   }
 
@@ -154,193 +178,34 @@ export class StudentPage implements OnInit {
     this.http.get(url, this.httpOptions).subscribe((data) => {
       this.jobList = data;
     })
-  
+
   }
-  getApplicationCompanyItems(id:any)
-  {
+  getApplicationCompanyItems(id: any) {
     var url = "https://broappv6.herokuapp.com/getApplicationCompany/" + id
-    this.http.get(url,this.httpOptions).subscribe((data) =>
-    {this.applicationCompanyList = data}
+    this.http.get(url, this.httpOptions).subscribe((data) => { this.applicationCompanyList = data }
     )
   }
 
-  getAllApplicationCompanyItems()
-  {
+  getAllApplicationCompanyItems() {
     var url = "https://broappv6.herokuapp.com/getApplicationCompany/"
-    this.http.get(url,this.httpOptions).subscribe((data)=>
-    {
+    this.http.get(url, this.httpOptions).subscribe((data) => {
       this.applicationCompanyList = data;
-      console.log(data);
     })
 
-    
-  }
-
-  getAppCom(appCompanyId : any)
-  {
-    var url = "https://broappv6.herokuapp.com/getJobOpenHouse/" + appCompanyId.detail.value; 
-    this.http.get(url,this.httpOptions).subscribe((data)=>
-    {
-
-      let tempData: any = data;
-      this.jobSelectedValueCompanyApplication = tempData[0];
-      console.log(data)
-    }
-    )
-  }
-
-  saveOpenHouseDetails() {
-
-    var url = "https://broappv6.herokuapp.com/addOpenHouseDetails/"
-
-    var postData = JSON.stringify({
-      Location: this.openHouseAddForm.value['location'],
-      DateTime: this.openHouseAddForm.value['dateTime'],
-      NoOfPax: this.openHouseAddForm.value['noOfPax'],
-      CompanyId: this.accountData[0].companyId
-    });
-
-    this.http.post(url, postData, this.httpOptions).subscribe(data => {
-      if (data == false) {
-        this.addedFail("Could not add open house details.")
-      } else if (data == true) {
-        this.added("Open house details added");
-        this.modalController.dismiss("open-modal")
-      }
-    })
 
   }
 
-  saveJobDetails() {
-    var url = "https://broappv6.herokuapp.com/addJobDetails"
+  gotoUpdateProfile(typeOfRegister: string) {
 
-    var postData = JSON.stringify({
-      JobName: this.jobDetailsAddForm.value['jobName'],
-      JobDetails: this.jobDetailsAddForm.value['jobDescription'],
-      Requirements: this.jobDetailsAddForm.value['jobRequirement'],
-      CompanyId: this.accountData[0].companyId
-    })
+    this.router.navigate(['update-profile', typeOfRegister, this.accountData[0].studentId]);
 
-    this.http.post(url, postData, this.httpOptions).subscribe(data => {
-      if (data == false) {
-        this.addedFail("Could not add job details.")
-      }
-      else if (data == true) {
-        this.added("Job details added.")
-      }
-    })
   }
-
-
-  saveApplicationCompany()
-  {
-    var url = "https://broappv6.herokuapp.com/addApplicantCompany"
-
-    var postData = JSON.stringify({
-      JobsIds : this.applicationCompanyForm.value['jobsId'].toString(),
-      OpenHouseId : this.applicationCompanyForm.value['openHouseId'],
-      Availability : "Yes",
-      NoOfApplicant : 0,
-      Description : this.applicationCompanyForm.value['description'],
-      JobType : this.applicationCompanyForm.value['jobType'],
-      CompanyId : this.accountData[0].companyId
- 
-    })
-
-    console.log(postData)
-
-    this.http.post(url, postData, this.httpOptions).subscribe(data => {
-      if (data == false) {
-        this.addedFail("Could not add application details.")
-      }
-      else if (data == true) {
-        this.added("Application details added.")
-      }
-    })
-  }
-
-  updateApplicationCompany(item : any)
-  {
-    var url = "https://broappv6.herokuapp.com/updateApplicantCompany"
-
-    var postData = JSON.stringify({
-      ApplicationCompanyId : item.appCompanyId,
-      JobsIds : this.applicationCompanyForm.value['jobsId'].toString(),
-      OpenHouseId : this.applicationCompanyForm.value['openHouseId'],
-      Availability : item.availability,
-      NoOfApplicant : item.noOfApplicant,
-      Description : this.applicationCompanyForm.value['description'],
-      JobType : this.applicationCompanyForm.value['jobType'],
-      CompanyId : item.companyId
- 
-    })
-
-    this.http.put(url, postData, this.httpOptions).subscribe(data => {
-      if (data == false) {
-        this.addedFail("Could not update application details.")
-      }
-      else if (data == true) {
-        this.added("Application details updated.")
-      }
-    })
-  }
-
-  deleteApplicationCompany(id:any)
-  {
-    var url ='https://broappv6.herokuapp.com/deleteApplicationCompany/' + id
-    this.http.delete(url,this.httpOptions).subscribe(data =>
-      {
-        if (data == false) {
-          this.addedFail("Could not delete application.")
-        }
-        else if (data == true) {
-          this.added("Application details delete.")
-        }
-      })
-  }
-
-
-  getCompanyApplicationDefaultValues(item:any)
-  {
-    this.jobSelectedValueCompanyApplication = item
-    this.jobSelectedValueCompanyApplication.jobIds = item.jobIds.toString().split(',');
-    this.jobSelectedValueCompanyApplication.openHouseId = item.openHouseId.toString();
-  }
-
-   async getApplicationDefaultValues(item:any)
-  {
-    
-    this.jobSelectedValueCompanyApplication = this.applicationCompanyList[item.detail.value]
-    this.jobSelectedValueCompanyApplication.jobIds = this.applicationCompanyList[item.detail.value].jobIds.toString().split(',');
-
-    this.getOpenHouseItemById(this.jobSelectedValueCompanyApplication.openHouseId)
-
-
-    for (item of this.jobSelectedValueCompanyApplication.jobIds)
-    {
-      this.getJobDetailsItemsByJobId(item)
-      await this.delay(5000)
-      this.jobListArray.push(this.jobList[0])
-      console.log(this.jobListArray)
-    }
-    await this.delay(8000)
-    
-  }
-
-
-  delay(ms: number) {
-    return new Promise( resolve => setTimeout(resolve, ms) );
-}
-
-
-
-
   formatDateTimeValue() {
 
     const formattedString = moment(this.openHouseDateTime).format("YYYY/MM/DD hh:mm")
     this.openHouseDateTime = formattedString;
   }
-  
+
   async added(message: string) {
 
     let toast = await this.toast.create({

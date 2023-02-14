@@ -1,5 +1,8 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
     <ion-title>Update Profile</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -8,70 +11,55 @@
   <form [formGroup]="updateForm">
     <ion-item>
       <ion-label>Name as in NRIC:</ion-label>
-      <ion-input formControlName="name"></ion-input>
-      <span slot="error">Name is required</span>
+      <ion-input [value]="accountData.name" formControlName="name"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label>Email:</ion-label>
-      <ion-input formControlName="email"></ion-input>
-      <span slot="error">Valid email is required</span>
+      <ion-input [value]="accountData.email" formControlName="email"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label>Contact Number:</ion-label>
-      <ion-input type="number" formControlName="contactNumber"></ion-input>
+      <ion-input [value]="accountData.contact_no" type="number" formControlName="contactNumber"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label>Certification:</ion-label>
-      <ion-input formControlName="certification"></ion-input>
-      <span slot="error">Name of Certification is required</span>
+      <ion-input [value]="accountData.certification" formControlName="certification"></ion-input>
     </ion-item>
       
     <ion-item>
       <ion-label>GPA:</ion-label>
-      <ion-input formControlName="gpa"></ion-input>
-      <span slot="error">Please provide your GPA</span>
+      <ion-input [value]="accountData.gpa" formControlName="gpa"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label>Industry Interest:</ion-label>
-      <ion-input formControlName="industry"></ion-input>
-      <span slot="error">Please provide your Industry Interest</span>
+      <ion-input [value]='accountData.industry_interest' formControlName="industry"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label>Summary:</ion-label>
-      <ion-input formControlName="summary"></ion-input>
-      <span slot="error">Please enter your summary</span>
+      <ion-label>About you:</ion-label>
+      <ion-input [value]='accountData.summary' formControlName="summary"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label>Expected Salary:</ion-label>
-      <ion-input formControlName="salary"></ion-input>
-      <span slot="error">Please provide what is your expected salary</span>
+      <ion-input [value]='accountData.expected_salary' formControlName="salary"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label>Birth Date:</ion-label>
-      <ion-input formControlName="birth"></ion-input>
-      <span slot="error">Please enter your Birth Date</span>
+      <ion-input [value]='accountData.birth_date' formControlName="birth"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label>Gender:</ion-label>
-      <ion-input formControlName="gender"></ion-input>
-      <span slot="error">Please enter your Gender</span>
+      <ion-input [value]='accountData.gender' formControlName="gender"></ion-input>
     </ion-item>
 
-    <ion-item>
-      <ion-label>Password:</ion-label>
-      <ion-input formControlName="password"></ion-input>
-      <span slot="error">Please provide a new password</span>
-    </ion-item>
-
-    <ion-button expand="block" color="secondary" (click)=submit()>Submit</ion-button>
+   <ion-button (click)="updateProfile()" expand="block" color="secondary" >Update Profile</ion-button>
 
   </form>
 

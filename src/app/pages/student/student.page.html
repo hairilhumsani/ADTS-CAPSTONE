@@ -6,7 +6,7 @@
       <ng-template>
         <ion-content>
           <ion-list>
-            <ion-item [button]="true" (click)="logout()" [detail]="false">Update Profile</ion-item>
+            <ion-item [button]="true" (click)="gotoUpdateProfile('student')" [detail]="false">Update Profile</ion-item>
             <ion-item [button]="true" (click)="logout()" [detail]="false">Logout</ion-item>
           </ion-list>
         </ion-content>
@@ -16,9 +16,6 @@
 </ion-header>
 
 <ion-content>
-  
-<div *ngIf="typeOfAccount == 'student'">
-
 <!--APPLICATION COLUMN-->
 <ion-list>
   <ion-item>
@@ -38,9 +35,9 @@
   <ng-template>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Add Job Details</ion-title>
+        <ion-title>Add Application</ion-title>
         <ion-buttons slot="end">
-          <ion-button (click)="saveJobDetails()">Save</ion-button>
+          <ion-button>Save</ion-button>
           <ion-button (click)="jobDescriptionModal.dismiss()">Close</ion-button>
         </ion-buttons>
       </ion-toolbar>
@@ -50,28 +47,29 @@
       <form [formGroup]="jobDetailsAddForm">
         <ion-list>
           <ion-item>
-            <ion-select (ionChange)="getAppCom($event)" placeholder="Select an application">
-              <div *ngFor="let item of applicationCompanyList">
-                <ion-select-option [value]="item.appCompanyId">{{item.description}}</ion-select-option>
-              </div>
+            <ion-select (ionChange)="updateModalPage($event)" placeholder="What would you like to apply?">
+                <ion-select-option value="openhouse">Open House</ion-select-option>
+                <ion-select-option value="job">Jobs</ion-select-option>
             </ion-select>
           </ion-item>
 
+          <div *ngIf="eventChange == 'openhouse'">
+            <ion-select (ionChange)="getOpenHouseItemById($event)" placeholder="Select an Open House">
+              <div *ngFor="let item of openHouseList"><ion-select-option value={{item.openhouseId}}>{{item.location}}</ion-select-option></div>
+          </ion-select>
+
           <ion-item>
-            <ion-label><h3>Description</h3><p>{{jobSelectedValueCompanyApplication.description}}</p></ion-label>
+            <ion-label><h3>Company Name</h3><p>{{companyData.company_name}}</p></ion-label>
           </ion-item>
           <ion-item>
-            <ion-label><h3>Job Type</h3><p>{{jobSelectedValueCompanyApplication.jobType}}</p></ion-label>
+            <ion-label><h3>No of Pax</h3><p>{{openHouseData.no_pax}}</p></ion-label>
           </ion-item>
           <ion-item>
-            <ion-label><h3>Job(s) Listed</h3><p></p></ion-label>
+            <ion-label><h3>Date and Time</h3><p>{{openHouseData.datetime}}</p></ion-label>
           </ion-item>
-          <ion-item>
-            <ion-label><h3>Company Name</h3><p>{{jobSelectedValueCompanyApplication.company_name}}</p></ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label><h3>Slots Available</h3><p>{{jobSelectedValueCompanyApplication.no_pax}}</p></ion-label>
-          </ion-item>
+          </div>
+
+          
 
           
 
@@ -80,6 +78,5 @@
     </ion-content>
   </ng-template>
 </ion-modal>
-</div>
 
 </ion-content>
